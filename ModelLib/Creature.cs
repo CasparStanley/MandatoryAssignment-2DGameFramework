@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +7,26 @@ using System.Threading.Tasks;
 
 namespace ModelLib
 {
-    public class Creature
+    public class Creature : GameObject, IHittable
     {
-        public Vector2 Position { get; set; }
+        public int Health { get; set; }
 
-        public Creature(Vector2 position)
+        private int MaxHealth;
+
+        public Creature(Vector2 position, string name) : base(position, name)
         {
-            Position = position;
+            Health = MaxHealth;
         }
 
         public void UpdatePosition(Vector2 newPosition)
         {
             throw new NotImplementedException();
         }
+
+        public void GetHit(int damage, GameObject damageDealer)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

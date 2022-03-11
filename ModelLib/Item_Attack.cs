@@ -8,11 +8,13 @@ namespace ModelLib
 {
     class Item_Attack : Item
     {
-        
+        public int Damage { get; set; }
+        public int Range { get; set; }
 
-        public Item_Attack(string name) : base(name)
+        public Item_Attack(int damage, int range, string name) : base(name)
         {
-
+            Damage = damage;
+            Range = range;
         }
     }
 }

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace ModelLib
 {
-    public class Item
+    public class Item : GameObject
     {
-        public string Name { get; private set; }
+        public bool Lootable { get; set; }
+        public bool Removable { get; set; }
 
-        public Item(string name)
+        public Item(Vector2 position, string name) : base (position, name)
         {
-            Name = name;
+
         }
     }
 }

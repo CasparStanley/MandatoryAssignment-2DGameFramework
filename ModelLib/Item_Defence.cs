@@ -8,11 +8,11 @@ namespace ModelLib
 {
     class Item_Defence : Item
     {
+        public int ArmorPoints { get; set; }
 
-
-        public Item_Defence(string name) : base(name)
+        public Item_Defence(int armorPoints, string name) : base(name)
         {
-
+            ArmorPoints = armorPoints;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ModelLib
     {
         public int ArmorPoints { get; set; }
 
-        public Item_Defence(int armorPoints, string name) : base(name)
+        public Item_Defence(int armorPoints, string name, Vector2 position) : base(name, position)
         {
             ArmorPoints = armorPoints;
         }

@@ -9,9 +9,15 @@ namespace ModelLib
     public class Item : GameObject
     {
         public bool Lootable { get; set; }
-        public bool Removable { get; set; }
 
-        public Item(Vector2 position, string name) : base (position, name)
+        public Item() { }
+
+        public Item(string name) : base(name)
+        {
+
+        }
+
+        public Item(string name, Vector2 position) : base (name, position)
         {
 
         }

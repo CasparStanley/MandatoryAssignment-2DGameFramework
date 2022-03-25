@@ -11,7 +11,7 @@ namespace ModelLib
         public int Damage { get; set; }
         public int Range { get; set; }
 
-        public Item_Attack(int damage, int range, string name) : base(name)
+        public Item_Attack(int damage, int range, string name, Vector2 position) : base(name, position)
         {
             Damage = damage;
             Range = range;

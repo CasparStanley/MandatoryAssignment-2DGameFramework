@@ -6,4 +6,8 @@
     <RootNamespace>MandatoryAssignment_2DGame</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ModelLib\ModelLib.csproj" />
+  </ItemGroup>
+
 </Project>

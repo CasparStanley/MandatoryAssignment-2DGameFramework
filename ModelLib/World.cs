@@ -26,6 +26,7 @@ namespace ModelLib
         {
             Grid = new Vector2(10, 10);
             Objects = new Dictionary<int, GameObject>();
+            Creatures = new List<Creature>();
         }
 
         // Factories
@@ -41,6 +42,16 @@ namespace ModelLib
             int del = (int)MathF.Round(t * 1000, 0);
             await Task.Delay(del);
             Objects.Remove(gObj.Id);
+        }
+
+        public static Vector2[] GetObjectPositions()
+        {
+            List<Vector2> positions = new List<Vector2>();
+            foreach(GameObject obj in Objects.Values)
+            {
+                positions.Add(obj.Position);
+            }
+            return positions.ToArray();
         }
     }
 }

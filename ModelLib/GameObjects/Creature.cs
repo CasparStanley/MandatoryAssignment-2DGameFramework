@@ -14,16 +14,21 @@ namespace ModelLib
         private int _maxHealth;
         private bool dead = false;
 
-        public Creature() { }
+        public Creature() 
+        {
+            OnCreate();
+        }
 
         public Creature(int maxHealth, string name) : base(name)
         {
             Health = _maxHealth = maxHealth;
+            OnCreate();
         }
 
         public Creature(int maxHealth, string name, Vector2 position) : base(name, position)
         {
             Health = _maxHealth = maxHealth;
+            OnCreate();
         }
 
         public void GetHit(int damage, GameObject damageDealer)
@@ -44,6 +49,11 @@ namespace ModelLib
                     World.Destroy(this, 0.25f);
                 }
             }
+        }
+
+        private void OnCreate()
+        {
+            World.Creatures.Add(this);
         }
 
         public void Heal(int addedHealth)

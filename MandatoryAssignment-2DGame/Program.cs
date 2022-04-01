@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ModelLib;
+using ModelLib.Agent;
+using ModelLib.Agent.Player;
 
 namespace MandatoryAssignment_2DGame
 {
@@ -9,6 +11,8 @@ namespace MandatoryAssignment_2DGame
         static void Main()
         {
             World level1 = new World();
+            Player player = new Player(new PlayerMove(), 100, "Player 1", new Vector2(4, 4));
+            GameObject box = new GameObject("Box", new Vector2(5, 7));
 
             //Item shield = new Item("Shield");
             //Creature player1 = new Creature(100, "Player 1");
@@ -20,38 +24,12 @@ namespace MandatoryAssignment_2DGame
             //    Debug.Log(kvp.Key + ") " + kvp.Value.ToString());
             //}
 
-            Vector2 currentPos = new Vector2(4, 4);
-
             while (true)
             {
-                DrawWorld.Draw(currentPos);
-                char input = Console.ReadKey().KeyChar;
-                Console.Clear();
+                DrawWorld.Draw(World.GetObjectPositions());
+                player.DoMove();
 
-                switch (char.ToLower(input))
-                {
-                    case ('w'):
-                        {
-                            currentPos += new Vector2(0, 1);
-                            break;
-                        }
-                    case ('a'):
-                        {
-                            currentPos += new Vector2(-1, 0);
-                            break;
-                        }
-                    case ('s'):
-                        {
-                            currentPos += new Vector2(0, -1);
-                            break;
-                        }
-                    case ('d'):
-                        {
-                            currentPos += new Vector2(1, 0);
-                            break;
-                        }
-                    default:break;
-                }
+                Console.Clear();
             }
         }
     }

@@ -17,6 +17,7 @@ namespace ModelLib
         public string Name { get; set; }
         public Vector2 Position { get; set; }
         public bool Active { get; set; } = true;
+        public char Shape { get; set; } = '\u00D7';
 
         public GameObject() 
         {
@@ -40,6 +41,16 @@ namespace ModelLib
         {
             Name = name;
             Position = position;
+
+            Id = World.NextGameObjectId;
+            OnCreate();
+        }
+
+        public GameObject(string name, Vector2 position, char shape)
+        {
+            Name = name;
+            Position = position;
+            Shape = shape;
 
             Id = World.NextGameObjectId;
             OnCreate();

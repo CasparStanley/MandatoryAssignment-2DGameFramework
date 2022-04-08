@@ -1,15 +1,14 @@
-﻿using ModelLib.Agent;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib.Agent.Player
+namespace ModelLib.Agent.Enemy
 {
-    public class PlayerMove : AgentMove
+    internal class EnemyMove : AgentMove
     {
-        // ToDo: Make wasd inputs not hard coded
+        // ToDo: Make this not wasd
         public override Vector2 Move(char input)
         {
             switch (char.ToLower(input))

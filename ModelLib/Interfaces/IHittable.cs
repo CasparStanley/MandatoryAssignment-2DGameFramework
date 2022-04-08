@@ -8,6 +8,6 @@ namespace ModelLib.Interfaces
 {
     internal interface IHittable
     {
-        void GetHit(int damage, GameObject damageDealer);
+        void GetHit(int damage);
     }
 }

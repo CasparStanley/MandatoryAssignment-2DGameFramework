@@ -22,9 +22,9 @@ namespace ModelLib
 
         public static Vector2 Grid { get; set; }
 
-        public World()
+        public World(Vector2 worldSize)
         {
-            Grid = new Vector2(10, 10);
+            Grid = worldSize;
             Objects = new Dictionary<int, GameObject>();
             Creatures = new List<Creature>();
         }
@@ -42,6 +42,16 @@ namespace ModelLib
             int del = (int)MathF.Round(t * 1000, 0);
             await Task.Delay(del);
             Objects.Remove(gObj.Id);
+        }
+
+        public static GameObject[] GetObjects()
+        {
+            List<GameObject> objects = new List<GameObject>();
+            foreach (GameObject obj in Objects.Values)
+            {
+                objects.Add(obj);
+            }
+            return objects.ToArray();
         }
 
         public static Vector2[] GetObjectPositions()

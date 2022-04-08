@@ -8,7 +8,7 @@ namespace ModelLib
 {
     public class DrawWorld
     {
-        public static void Draw(Vector2[] objPositions)
+        public static void Draw(GameObject[] objects)
         {
             bool objectDrawn = false;
 
@@ -19,12 +19,12 @@ namespace ModelLib
                     objectDrawn = false;
 
                     // Objects
-                    foreach (Vector2 obj in objPositions)
+                    foreach (GameObject obj in objects)
                     {
-                        if (x == obj.x && y == obj.y)
+                        if (x == obj.Position.x && y == obj.Position.y)
                         {
                             objectDrawn = true;
-                            Debug.LogWarning("\u0020o\u0020", ConsoleColor.Blue);
+                            Debug.LogWarning($"\u0020{obj.Shape}\u0020", ConsoleColor.Blue);
                         }
                     }
 

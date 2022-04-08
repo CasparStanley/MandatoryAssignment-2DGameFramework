@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelLib
 {
-    class Item_Defence : Item
+    public class Item_Defence : Item
     {
         public int ArmorPoints { get; set; }
 

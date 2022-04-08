@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelLib
 {
-    class Item_Attack : Item
+    public class Item_Attack : Item
     {
         public int Damage { get; set; }
         public int Range { get; set; }

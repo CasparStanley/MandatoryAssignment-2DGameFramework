@@ -4,29 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib.Agent.Player
+namespace ModelLib.Agent.Enemy
 {
-    public class Player : Creature
+    internal class Enemy : Creature
     {
         AgentMove Movement { get; set; }
         public override AgentAttack Attack { get; set; }
 
-        public Player()
+        public Enemy()
         {
-            Movement = new PlayerMove();
+            Movement = new EnemyMove();
         }
 
-        public Player(AgentMove movement, int maxHealth, string name) : base(maxHealth, name)
-        {
-            Movement = movement;
-        }
-
-        public Player(AgentMove movement, int maxHealth, string name, Vector2 position) : base(maxHealth, name, position)
+        public Enemy(AgentMove movement, int maxHealth, string name) : base(maxHealth, name)
         {
             Movement = movement;
         }
 
-        public Player(AgentMove movement, int maxHealth, string name, Vector2 position, char shape) : base(maxHealth, name, position, shape)
+        public Enemy(AgentMove movement, int maxHealth, string name, Vector2 position) : base(maxHealth, name, position)
+        {
+            Movement = movement;
+        }
+
+        public Enemy(AgentMove movement, int maxHealth, string name, Vector2 position, char shape) : base(maxHealth, name, position, shape)
         {
             Movement = movement;
         }

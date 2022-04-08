@@ -10,8 +10,8 @@ namespace MandatoryAssignment_2DGame
     {
         static void Main()
         {
-            World level1 = new World();
-            Player player = new Player(new PlayerMove(), 100, "Player 1", new Vector2(4, 4));
+            World level1 = new World(new Vector2(20, 20));
+            Player player = new Player(new PlayerMove(), 100, "Player 1", new Vector2(4, 4), 'o');
             GameObject box = new GameObject("Box", new Vector2(5, 7));
 
             //Item shield = new Item("Shield");
@@ -26,8 +26,8 @@ namespace MandatoryAssignment_2DGame
 
             while (true)
             {
-                DrawWorld.Draw(World.GetObjectPositions());
-                player.DoMove();
+                DrawWorld.Draw(World.GetObjects());
+                player.DoMove(Console.ReadKey().KeyChar);
 
                 Console.Clear();
             }

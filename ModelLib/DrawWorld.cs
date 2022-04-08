@@ -24,7 +24,8 @@ namespace ModelLib
                         if (x == obj.Position.x && y == obj.Position.y)
                         {
                             objectDrawn = true;
-                            Debug.LogWarning($"\u0020{obj.Shape}\u0020", ConsoleColor.Blue);
+                            DrawCell($"\u0020{obj.Shape}\u0020", ConsoleColor.Blue, ConsoleColor.Yellow);
+                            Debug.Log("An object was drawn", onlyTrace:true);
                         }
                     }
 
@@ -33,26 +34,36 @@ namespace ModelLib
                         // Corners
                         if (y == 0 && x == 0 || y == 0 && x == World.Grid.x - 1 || y == World.Grid.y - 1 && x == 0 || y == World.Grid.y - 1 && x == World.Grid.x - 1)
                         {
-                            Debug.Log("+", ConsoleColor.White);
+                            DrawCell("+");
                         }
                         // Sides, except for corners
                         else if (x == 0 || x == World.Grid.x - 1)
                         {
-                            Debug.Log("|", ConsoleColor.White);
+                            DrawCell("|");
                         }
                         // Top and Bottom, except for corners
                         else if (y == 0 || y == World.Grid.y - 1)
                         {
-                            Debug.Log("---", ConsoleColor.White);
+                            DrawCell("---");
                         }
                         else
                         {
-                            Debug.LogWarning("\u0020\u0020\u0020");
+                            DrawCell("\u0020\u0020\u0020", backgroundColor:ConsoleColor.Yellow);
                         }
                     }
                 }
                 Console.Write("\n");
             }
+        }
+
+        private static void DrawCell(string content, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.DarkGray)
+        {
+            Console.ForegroundColor = foregroundColor;
+            Console.BackgroundColor = backgroundColor;
+
+            Console.Write(content);
+
+            Console.ResetColor();
         }
     }
 }

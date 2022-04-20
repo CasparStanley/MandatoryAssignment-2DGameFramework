@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ModelLib;
 using ModelLib.Agent;
 using ModelLib.Agent.Player;
+using ModelLib.Interfaces;
 
 namespace MandatoryAssignment_2DGame
 {
@@ -10,13 +11,29 @@ namespace MandatoryAssignment_2DGame
     {
         static void Main()
         {
+            ConfigReader configReader = new ConfigReader();
+            IConfig config;
+
             Debug.StartTracing();
 
-            bool runGame = true;
-
-            World level1 = new World(new Vector2(20, 20));
-            Player player = new Player(new PlayerMove(), 100, "Player 1", new Vector2(4, 4), 'o');
+            Debug.Log("Do you want to load settings from the configuration file? (Type 'y' for yes)", ConsoleColor.Blue);
+            bool answer = Console.ReadKey().KeyChar == 'y' ? true : false;
+            if (answer)
+            {
+                config = configReader.ReadConfiguration();
+            }
+            else
+            {
+                config = new Config(new Vector2(20, 20), new Vector2(4, 4), 'o');
+            }
+            
+            World level1 = new World(config.BoardSize);
+            Player player = new Player(new PlayerMove(), 100, "Player 1", config.PlayerStartPos, config.PlayerIcon);
+            
+            // Place a random box
             GameObject box = new GameObject("Box", new Vector2(5, 7));
+
+            bool runGame = true;
 
             //Item shield = new Item("Shield");
             //Creature player1 = new Creature(100, "Player 1");

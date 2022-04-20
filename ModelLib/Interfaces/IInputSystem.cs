@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Interfaces
 {
-    internal interface IMove
+    public interface IInputSystem
     {
-        Vector2 Move(string input);
+        string InputSystemName { get; set; }
+        Dictionary<char, string> Inputs { get; set; }
     }
 }

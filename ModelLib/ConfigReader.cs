@@ -26,9 +26,25 @@ namespace ModelLib
             //}
 
 
+            XmlNode inputSystem = configDoc.DocumentElement.SelectSingleNode("InputSystem");
             XmlNode boardSize = configDoc.DocumentElement.SelectSingleNode("BoardSize");
             XmlNode playerStartPos = configDoc.DocumentElement.SelectSingleNode("PlayerStartPos");
             XmlNode playerIcon = configDoc.DocumentElement.SelectSingleNode("PlayerIcon");
+
+            if (inputSystem != null)
+            {
+                string str = inputSystem.InnerText.Trim();
+                if (str.Length > 0)
+                {
+                    // This is not really loading it from the config file, but let's pretend...
+                    config.InputSystem = InputSystemCaspar.Instance;
+                    Debug.Log($"Input System: {nameof(config.InputSystem)}");
+                }
+                else
+                {
+                    Debug.LogError($"{inputSystem.Name} was not properly loaded from the config file.");
+                }
+            }
 
             if (boardSize != null)
             {

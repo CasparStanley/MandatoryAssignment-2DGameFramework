@@ -5,12 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib
+namespace ModelLib.Factories
 {
     public class GameObjectFactory : IGameObjectFactory
     {
-        private string _name;
-        private Vector2 _position;
+        protected string _name;
+        protected Vector2 _position;
+
+        public GameObjectFactory(string name)
+        {
+            _name = name;
+            _position = Vector2.zero;
+        }
 
         public GameObjectFactory(string name, Vector2 position)
         {

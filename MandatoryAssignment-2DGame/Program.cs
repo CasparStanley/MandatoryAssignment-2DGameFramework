@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ModelLib;
 using ModelLib.Agent;
 using ModelLib.Agent.Player;
+using ModelLib.Factories;
 using ModelLib.Interfaces;
 
 namespace MandatoryAssignment_2DGame
@@ -11,29 +12,17 @@ namespace MandatoryAssignment_2DGame
     {
         static void Main()
         {
-            ConfigReader configReader = new ConfigReader();
-            IConfig config;
+            IGameStart gameStart = GameStart.Instance;
+            gameStart.StartGame();
 
-            Debug.StartTracing();
-
-            Debug.Log("Do you want to load settings from the configuration file? (Type 'y' for yes)", ConsoleColor.Blue);
-            bool answer = Console.ReadKey().KeyChar == 'y' ? true : false;
-            if (answer)
+            // Place some random boxes
+            IGameObjectFactory randomBoxFactory = new RandomBoxFactory(new Vector2(1, MathF.Min(World.Grid.x, World.Grid.y) - 1), "Box");
+            for (int i = 0; i < 3; i++)
             {
-                config = configReader.ReadConfiguration();
+                GameObject box = randomBoxFactory.GetGameObject();
             }
-            else
-            {
-                config = new Config(new Vector2(20, 20), new Vector2(4, 4), 'o');
-            }
-            
-            World level1 = new World(config.BoardSize);
-            Player player = new Player(new PlayerMove(), 100, "Player 1", config.PlayerStartPos, config.PlayerIcon);
-            
-            // Place a random box
-            GameObject box = new GameObject("Box", new Vector2(5, 7));
 
-            bool runGame = true;
+            gameStart.RunGame();
 
             //Item shield = new Item("Shield");
             //Creature player1 = new Creature(100, "Player 1");
@@ -44,38 +33,6 @@ namespace MandatoryAssignment_2DGame
             //{
             //    Debug.Log(kvp.Key + ") " + kvp.Value.ToString());
             //}
-
-            while (runGame)
-            {
-                DrawWorld.Draw(World.GetObjects());
-                Debug.Log("-------- The world was updated --------", onlyTrace:true); // Custom Debug class, which also uses tracing.
-
-                char input = Console.ReadKey().KeyChar;
-
-                switch (input)
-                {
-                    case 'w':
-                        player.DoMove(input);
-                        break;
-                    case 'a':
-                        player.DoMove(input);
-                        break;
-                    case 's':
-                        player.DoMove(input);
-                        break;
-                    case 'd':
-                        player.DoMove(input);
-                        break;
-                    case (char)ConsoleKey.Escape:
-                        runGame = false;
-                        break;
-                }
-
-                Console.Clear();
-            }
-
-            // It is important to hit escape before closing the program, so the code will reach this part to save the tracing file.
-            Debug.StopTracing();
         }
     }
 }

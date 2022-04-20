@@ -31,7 +31,7 @@ namespace ModelLib.Agent.Player
             Movement = movement;
         }
 
-        public override void DoMove(char dir)
+        public override void DoMove(string dir)
         {
             Position += Movement.Move(dir);
         }

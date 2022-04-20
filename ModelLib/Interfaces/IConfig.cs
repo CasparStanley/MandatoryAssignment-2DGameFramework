@@ -8,6 +8,7 @@ namespace ModelLib.Interfaces
 {
     public interface IConfig
     {
+        IInputSystem InputSystem { get; set; }
         Vector2 BoardSize { get; set; }
         Vector2 PlayerStartPos { get; set; }
         char PlayerIcon { get; set; }

@@ -1,5 +1,4 @@
-﻿using ModelLib.Agent;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Agent.Player
 {
-    public class PlayerMove : AgentMove
+    public class PlayerDo
     {
-        // ToDo: Make wasd inputs not hard coded
-        public override Vector2 Move(string input)
+        public void ParseInput (string input)
         {
             switch (input)
             {
                 case ("Up"):
                     {
-                        return new Vector2(0, 1);
+                        _player.DoMove(input);
                     }
                 case ("Left"):
                     {

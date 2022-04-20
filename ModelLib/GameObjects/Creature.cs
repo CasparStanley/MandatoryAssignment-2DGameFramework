@@ -64,7 +64,7 @@ namespace ModelLib
             }
         }
 
-        public abstract void DoMove(char dir);
+        public abstract void DoMove(string dir);
 
         public virtual void OnCreate()
         {

@@ -62,24 +62,26 @@ namespace ModelLib
 
             // Create the world and player
             _world = new World(_config.BoardSize);
-            _player = new Player(new PlayerMove(), 100, "Player 1", _config.PlayerStartPos, _config.PlayerIcon);
+            _player = new Player(new PlayerMove(), 100, 2, "Player 1", _config.PlayerStartPos, _config.PlayerIcon);
+
+            Debug.Log("-------- The world was created --------", onlyTrace: true); // Custom Debug class, which also uses tracing.
 
             _running = true;
         }
 
+        // TODO: DESIGN PATTERN - POTENTIAL USE OF STRATEGY - To control what goes in which order.
         public virtual void RunGame()
         {
+            DrawWorld.Instance.Draw(World.GetObjects());
+            Debug.Log("-------- The world drawn for the first time --------", onlyTrace: true);
+
             while (_running)
             {
-                DrawWorld.Draw(World.GetObjects());
-                Debug.Log("-------- The world was updated --------", onlyTrace: true); // Custom Debug class, which also uses tracing.
-
                 char input = Console.ReadKey().KeyChar;
                 if (_config.InputSystem.Inputs.ContainsKey(input))
                 {
 
                 }
-                
 
                 switch (input)
                 {
@@ -95,12 +97,20 @@ namespace ModelLib
                     case 'd':
                         _player.DoMove("Right");
                         break;
+                    case 'e':
+                        _player.PickUpItem();
+                        break;
+                    case 'q':
+                        _player.Attack.OnAttack();
+                        break;
                     case (char)ConsoleKey.Escape:
                         StopGame();
                         break;
                 }
 
                 Console.Clear();
+                DrawWorld.Instance.Draw(World.GetObjects());
+                Debug.Log("-------- The world was updated --------", onlyTrace: true);
             }
         }
 

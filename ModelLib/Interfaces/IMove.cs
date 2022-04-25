@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Interfaces
 {
-    internal interface IMove
+    public interface IMove
     {
         Vector2 Move(string input);
     }

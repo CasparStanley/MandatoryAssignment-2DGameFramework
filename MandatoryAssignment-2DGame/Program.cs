@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using ModelLib;
 using ModelLib.Agent;
 using ModelLib.Agent.Player;
+using ModelLib.Agent.Enemy;
 using ModelLib.Factories;
 using ModelLib.Interfaces;
+using ModelLib.GameObjects;
+using ModelLib.GameObjects.Armor;
+using ModelLib.GameObjects.Weapons;
 
 namespace MandatoryAssignment_2DGame
 {
@@ -19,8 +23,17 @@ namespace MandatoryAssignment_2DGame
             IGameObjectFactory randomBoxFactory = new RandomBoxFactory(new Vector2(1, MathF.Min(World.Grid.x, World.Grid.y) - 1), "Box");
             for (int i = 0; i < 3; i++)
             {
-                GameObject box = randomBoxFactory.GetGameObject();
+                GameObject box = randomBoxFactory.GetGameObjectFixedPosition();
             }
+
+            // Place a weapon
+            IGameObjectFactory swordFactory = new SwordFactory(10, 2, "Sword");
+            Sword sword = (Sword)swordFactory.GetGameObject(new Vector2(4, 2));
+
+            // Place some enemies
+            IGameObjectFactory enemyFactory = new EnemyFactory(4, 2, "Enemy", 'E');
+            Enemy enemy1 = (Enemy)enemyFactory.GetGameObject(new Vector2(2, 2));
+            Enemy enemy2 = (Enemy)enemyFactory.GetGameObject(new Vector2(6, 6));
 
             gameStart.RunGame();
 

@@ -8,6 +8,7 @@ namespace ModelLib.Interfaces
 {
     public interface IGameObjectFactory
     {
-        GameObject GetGameObject();
+        GameObject GetGameObjectFixedPosition();
+        GameObject GetGameObject(Vector2 position);
     }
 }

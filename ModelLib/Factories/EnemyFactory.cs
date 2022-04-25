@@ -1,4 +1,4 @@
-﻿using ModelLib.Agent.Player;
+﻿using ModelLib.Agent.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Factories
 {
-    internal class PlayerFactory : GameObjectFactory
+    public class EnemyFactory : GameObjectFactory
     {
         private int _maxHealth;
         private int _interactionDistance;
 
-        public PlayerFactory(int maxHealth, int interactionDist, string name, Vector2 position) : base(name, position)
+        public EnemyFactory(int maxHealth, int interactionDist, string name, char creatureShape) : base(name, creatureShape)
         {
             _maxHealth = maxHealth;
             _interactionDistance = interactionDist;
         }
 
-        public PlayerFactory(int maxHealth, int interactionDist, string name) : base(name)
+        public EnemyFactory(int maxHealth, int interactionDist, string name, Vector2 position, char creatureShape) : base(name, position, creatureShape)
         {
             _maxHealth = maxHealth;
             _interactionDistance = interactionDist;
@@ -26,12 +26,12 @@ namespace ModelLib.Factories
 
         public override GameObject GetGameObjectFixedPosition()
         {
-            return new Player(new PlayerMove(), _maxHealth, _interactionDistance, _name, _position);
+            return new Enemy(new EnemyMove(), _maxHealth, _interactionDistance, "Enemy", _position, _shape);
         }
 
         public override GameObject GetGameObject(Vector2 position)
         {
-            return new Player(new PlayerMove(), _maxHealth, _interactionDistance, _name, position);
+            return new Enemy(new EnemyMove(), _maxHealth, _interactionDistance, "Enemy", position, _shape);
         }
     }
 }

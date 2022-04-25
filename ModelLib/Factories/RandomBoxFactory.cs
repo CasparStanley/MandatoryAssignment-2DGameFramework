@@ -15,7 +15,7 @@ namespace ModelLib.Factories
             Range = range;
         }
 
-        public override GameObject GetGameObject()
+        public override GameObject GetGameObjectFixedPosition()
         {
             Random r = new Random();
             int x = r.Next((int)Range.x, (int)Range.y);

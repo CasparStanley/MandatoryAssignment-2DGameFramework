@@ -11,6 +11,7 @@ namespace ModelLib
     {
         private List<RelativeDistanceGameObject> gameObjectsDistance;
 
+        // HACK: LINQ
         /// <summary>
         /// This method uses LINQ Data Transformation to make a new List of game objects in the world, but with a relative distance to an origin point.
         /// This could be used to find the distances to everything from the Player. 

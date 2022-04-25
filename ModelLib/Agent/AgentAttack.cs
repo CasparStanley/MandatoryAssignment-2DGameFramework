@@ -6,20 +6,32 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Agent
 {
-    public class AgentAttack
+    public abstract class AgentAttack
     {
-        public virtual int BaseAttackHitpoints { get; set; }
-        public virtual int BaseAttackSpeed { get; set; }
+        public abstract Creature ThisAgent { get; set; }
+        public abstract int BaseAttackHitpoints { get; set; }
+        public abstract int BaseAttackSpeed { get; set; }
+        public abstract int CurrentAttackHitpoints { get; set; }
+        public abstract int CurrentAttackSpeed { get; set; }
 
-        public virtual void OnAttack(Creature target, Item_Attack weapon = null)
+        public virtual void OnAttack()
         {
-            if (weapon != null)
+            foreach (Creature target in World.Creatures)
             {
-                target.GetHit(weapon.Damage);
-            }
-            else
-            {
-                target.GetHit(BaseAttackHitpoints);
+                if ((Vector2.Distance(target.Position, ThisAgent.Position) < ThisAgent.InteractionDistance))
+                {
+                    if ((Vector2.Distance(target.Position, ThisAgent.Position) < ThisAgent.InteractionDistance))
+                    {
+                        if (ThisAgent.WeaponEquiped != null)
+                        {
+                            target.GetHit(ThisAgent.WeaponEquiped.Damage);
+                        }
+                        else
+                        {
+                            target.GetHit(BaseAttackHitpoints);
+                        }
+                    }
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ namespace ModelLib.Agent.Player
 {
     public class PlayerMove : AgentMove
     {
-        // ToDo: Make wasd inputs not hard coded
+        // HACK: SOLID - Single Responsibility
         public override Vector2 Move(string input)
         {
             switch (input)

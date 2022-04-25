@@ -47,7 +47,14 @@ namespace ModelLib
             y = newY;
         }
 
+        public static float Distance(Vector2 a, Vector2 b)
+        {
+            float num = a.x - b.x;
+            float num2 = a.y - b.y;
+            return (float)Math.Sqrt(num * num + num2 * num2);
+        }
 
+        // HACK: OPERATOR OVERLOAD
         // OPERATORS - This is so we can do some of the operations we know from int and float, but on a Vector2
         #region Operators
         public static Vector2 operator +(Vector2 a, Vector2 b)

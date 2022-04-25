@@ -11,7 +11,7 @@ namespace ModelLib.Agent
     {
         //public Vector2 currentPos { get; set; } = Vector2.zero;
 
-        // ToDo: Chack world boundary
+        
         public abstract Vector2 Move(string input);
     }
 }

@@ -9,6 +9,7 @@ namespace ModelLib
 {
     public class Config : IConfig
     {
+        // HACK: CONFIG
         public IInputSystem InputSystem { get; set; }
         public Vector2 BoardSize { get; set; }
         public Vector2 PlayerStartPos { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,27 +9,31 @@ namespace ModelLib.Agent.Player
 {
     public class Player : Creature
     {
-        AgentMove Movement { get; set; }
+        IMove Movement { get; set; }
         public override AgentAttack Attack { get; set; }
 
         public Player()
         {
             Movement = new PlayerMove();
+            Attack = new PlayerAttack(this, 1, 1);
         }
 
-        public Player(AgentMove movement, int maxHealth, string name) : base(maxHealth, name)
+        public Player(IMove movement, int maxHealth, int interactionDist, string name) : base(maxHealth, interactionDist, name)
         {
             Movement = movement;
+            Attack = new PlayerAttack(this, 1, 1);
         }
 
-        public Player(AgentMove movement, int maxHealth, string name, Vector2 position) : base(maxHealth, name, position)
+        public Player(IMove movement, int maxHealth, int interactionDist, string name, Vector2 position) : base(maxHealth, interactionDist, name, position)
         {
             Movement = movement;
+            Attack = new PlayerAttack(this, 1, 1);
         }
 
-        public Player(AgentMove movement, int maxHealth, string name, Vector2 position, char shape) : base(maxHealth, name, position, shape)
+        public Player(IMove movement, int maxHealth, int interactionDist, string name, Vector2 position, char shape) : base(maxHealth, interactionDist, name, position, shape)
         {
             Movement = movement;
+            Attack = new PlayerAttack(this, 1, 1);
         }
 
         public override void DoMove(string dir)

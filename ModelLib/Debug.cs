@@ -15,6 +15,8 @@ namespace ModelLib
     /// </summary>
     public static class Debug
     {
+        // HACK: Tracing/Logging
+
         private static TraceSource ts = new TraceSource("Trace Source");
         // Tracelog.txt is located at: MandatoryAssignment-2DGameFramework\MandatoryAssignment-2DGame\bin\Debug\net5.0\Tracelog.txt
         private static TraceListener textTraceListener = new TextWriterTraceListener(new StreamWriter("TraceLog.txt"));

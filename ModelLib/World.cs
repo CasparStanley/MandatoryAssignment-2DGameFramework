@@ -41,6 +41,7 @@ namespace ModelLib
         {
             int del = (int)MathF.Round(t * 1000, 0);
             await Task.Delay(del);
+            gObj.SetActive(false);
             Objects.Remove(gObj.Id);
         }
 

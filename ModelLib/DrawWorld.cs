@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelLib.Agent.Player;
+using ModelLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +8,15 @@ using System.Threading.Tasks;
 
 namespace ModelLib
 {
-    public class DrawWorld
+    public class DrawWorld : DrawWorldTemplate<DrawWorld>
     {
-        public static void Draw(GameObject[] objects)
+        public override string WorldName { get; set; }
+
+        private DrawWorld() { }
+
+
+
+        public override void Draw(GameObject[] objects)
         {
             bool objectDrawn = false;
 
@@ -21,7 +29,7 @@ namespace ModelLib
                     // Objects
                     foreach (GameObject obj in objects)
                     {
-                        if (x == obj.Position.x && y == obj.Position.y)
+                        if (obj.Active && x == obj.Position.x && y == obj.Position.y)
                         {
                             objectDrawn = true;
                             DrawCell($"\u0020{obj.Shape}\u0020", ConsoleColor.Blue, ConsoleColor.Yellow);
@@ -54,9 +62,11 @@ namespace ModelLib
                 }
                 Console.Write("\n");
             }
+
+            WriteStats();
         }
 
-        private static void DrawCell(string content, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.DarkGray)
+        public override void DrawCell(string content, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.DarkGray)
         {
             Console.ForegroundColor = foregroundColor;
             Console.BackgroundColor = backgroundColor;
@@ -64,6 +74,17 @@ namespace ModelLib
             Console.Write(content);
 
             Console.ResetColor();
+        }
+
+        public override void WriteStats()
+        {
+            foreach (GameObject obj in World.GetObjects())
+            {
+                if (obj is Player)
+                {
+                    Debug.Log(obj.ToString());
+                }
+            }
         }
     }
 }

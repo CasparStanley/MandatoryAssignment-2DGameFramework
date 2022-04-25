@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Agent.Enemy
 {
-    internal class Enemy : Creature
+    public class Enemy : Creature
     {
-        AgentMove Movement { get; set; }
+        IMove Movement { get; set; }
         public override AgentAttack Attack { get; set; }
 
         public Enemy()
@@ -16,22 +17,22 @@ namespace ModelLib.Agent.Enemy
             Movement = new EnemyMove();
         }
 
-        public Enemy(AgentMove movement, int maxHealth, string name) : base(maxHealth, name)
+        public Enemy(IMove movement, int maxHealth, int interactionDist, string name) : base(maxHealth, interactionDist, name)
         {
             Movement = movement;
         }
 
-        public Enemy(AgentMove movement, int maxHealth, string name, Vector2 position) : base(maxHealth, name, position)
+        public Enemy(IMove movement, int maxHealth, int interactionDist, string name, Vector2 position) : base(maxHealth, interactionDist, name, position)
         {
             Movement = movement;
         }
 
-        public Enemy(AgentMove movement, int maxHealth, string name, Vector2 position, char shape) : base(maxHealth, name, position, shape)
+        public Enemy(IMove movement, int maxHealth, int interactionDist, string name, Vector2 position, char shape) : base(maxHealth, interactionDist, name, position, shape)
         {
             Movement = movement;
         }
 
-        public override void DoMove(char dir)
+        public override void DoMove(string dir)
         {
             Position += Movement.Move(dir);
         }

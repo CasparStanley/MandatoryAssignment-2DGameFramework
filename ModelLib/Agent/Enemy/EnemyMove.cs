@@ -8,24 +8,24 @@ namespace ModelLib.Agent.Enemy
 {
     internal class EnemyMove : AgentMove
     {
-        // ToDo: Make this not wasd
-        public override Vector2 Move(char input)
+        
+        public override Vector2 Move(string input)
         {
-            switch (char.ToLower(input))
+            switch (input)
             {
-                case ('w'):
+                case ("Up"):
                     {
                         return new Vector2(0, 1);
                     }
-                case ('a'):
+                case ("Left"):
                     {
                         return new Vector2(-1, 0);
                     }
-                case ('s'):
+                case ("Down"):
                     {
                         return new Vector2(0, -1);
                     }
-                case ('d'):
+                case ("Right"):
                     {
                         return new Vector2(1, 0);
                     }

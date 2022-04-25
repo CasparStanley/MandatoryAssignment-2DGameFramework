@@ -13,13 +13,15 @@ namespace ModelLib
     }
     public class GameObject
     {
+        // HACK: SOLID - Open-Closed princible - GameObject is open for extension, but closed for modification (Item as example)
+
         public int Id { get; }
         public string Name { get; set; }
         public Vector2 Position { get; set; }
         public bool Active { get; set; } = true;
         public char Shape { get; set; } = '\u00D7';
 
-        public GameObject() 
+        public GameObject()
         {
             Name = "";
             Position = Vector2.zero;
@@ -56,12 +58,12 @@ namespace ModelLib
             OnCreate();
         }
 
-        private void OnCreate()
+        public virtual void OnCreate()
         {
             World.Objects.Add(Id, this);
         }
 
-        public void SetActive(bool state)
+        public virtual void SetActive(bool state)
         {
             Active = state;
         }
@@ -73,7 +75,22 @@ namespace ModelLib
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(Name)}={Name}, {nameof(Position)}={Position.ToString()}, {nameof(Active)}={Active.ToString()}}}";
+            return $"{nameof(Name)}={Name}: {nameof(Id)}={Id.ToString()}, {nameof(Position)}={Position.ToString()}, {nameof(Active)}={Active.ToString()}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GameObject @object &&
+                   Id == @object.Id &&
+                   Name == @object.Name &&
+                   Position.Equals(@object.Position) &&
+                   Active == @object.Active &&
+                   Shape == @object.Shape;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Position, Active, Shape);
         }
     }
 }

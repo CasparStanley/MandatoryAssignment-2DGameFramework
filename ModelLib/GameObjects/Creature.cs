@@ -10,11 +10,14 @@ namespace ModelLib
 {
     public abstract class Creature : GameObject, IHittable
     {
+        // HACK: DESIGN PATTERN - TEMPLATE
+
         public abstract AgentAttack Attack { get; set; }
 
         public Item HoldingItem { get; set; }
         public Item_Attack WeaponEquiped { get; set; }
         public List<Item_Defence> ArmorEquiped { get; set; } = new List<Item_Defence>();
+        public int InteractionDistance { get; set; }
 
         public int Health { get; set; }
 
@@ -23,40 +26,42 @@ namespace ModelLib
 
         public Creature() 
         {
-            OnCreate();
+            OnCreateCreature();
         }
 
-        public Creature(int maxHealth, string name) : base(name)
+        public Creature(int maxHealth, int interactionDist, string name) : base(name)
         {
             Health = _maxHealth = maxHealth;
-            OnCreate();
+            InteractionDistance = interactionDist;
+            OnCreateCreature();
         }
 
-        public Creature(int maxHealth, string name, Vector2 position) : base(name, position)
+        public Creature(int maxHealth, int interactionDist, string name, Vector2 position) : base(name, position)
         {
             Health = _maxHealth = maxHealth;
-            OnCreate();
+            InteractionDistance = interactionDist;
+            OnCreateCreature();
         }
 
-        public Creature(int maxHealth, string name, Vector2 position, char shape) : base(name, position, shape)
+        public Creature(int maxHealth, int interactionDist, string name, Vector2 position, char shape) : base(name, position, shape)
         {
             Health = _maxHealth = maxHealth;
-            OnCreate();
+            InteractionDistance = interactionDist;
+            OnCreateCreature();
         }
 
-        public void GetHit(int damage)
+        // Would be better to use damage class instead of int
+        public virtual void GetHit(int damage)
         {
-            Debug.Log("Player got hit");
+            Debug.Log($"Creature got hit for {damage} health points");
 
             if (!dead)
             {
                 Health -= damage;
-                OnGetHit();
                 if (Health <= 0)
                 {
-                    Debug.Log("Player diead");
+                    Debug.Log("Creature died");
 
-                    OnDie();
                     dead = true;
 
                     World.Destroy(this, 0.25f);
@@ -66,7 +71,7 @@ namespace ModelLib
 
         public abstract void DoMove(string dir);
 
-        public virtual void OnCreate()
+        public virtual void OnCreateCreature()
         {
             World.Creatures.Add(this);
         }
@@ -77,41 +82,93 @@ namespace ModelLib
             if (Health > _maxHealth) { Health = _maxHealth; }
         }
 
-        public virtual void PickUpItem(Item item)
+        // TODO: DESIGN PATTERN - POTENTIAL USE OF DECORATOR - To have a separate class to "decorate" the creature. Also good for SOLID/Loose coupling.
+        public virtual void PickUpItem()
         {
-            if (item is Item)
+            foreach (GameObject item in World.GetObjects())
             {
-                DropItem(HoldingItem);
-                HoldingItem = item;
-            }
-            else if (item is Item_Attack)
-            {
-                DropItem(WeaponEquiped);
-                WeaponEquiped = (Item_Attack)item;
-            }
-            else if (item is Item_Defence)
-            {
-                ArmorEquiped.Add((Item_Defence)item);
-            }
+                if ((Vector2.Distance(item.Position, Position) < InteractionDistance))
+                {
+                    if (item is Item_Attack)
+                    {
+                        item.SetActive(false);
 
-            item.SetActive(false);
+                        DropItem(WeaponEquiped);
+                        WeaponEquiped = (Item_Attack)item;
+                        Attack.CurrentAttackHitpoints = WeaponEquiped.Damage;
+                        Debug.Log("Equipped attack item");
+                    }
+                    else if (item is Item_Defence)
+                    {
+                        item.SetActive(false);
+
+                        ArmorEquiped.Add((Item_Defence)item);
+                        Debug.Log("Equipped defence item");
+                    }
+                    else if(item is Item)
+                    {
+                        item.SetActive(false);
+
+                        DropItem(HoldingItem);
+                        HoldingItem = (Item)item;
+                        Debug.Log("Picked up item");
+                    }
+                }
+            }
         }
 
         public virtual void DropItem(Item item)
         {
-            // Drop the item below the creature
-            item.UpdatePosition(Position + Vector2.down);
-            item.SetActive(true);
+            if (item != null)
+            {
+                // Drop the item below the creature
+                item.UpdatePosition(Position + Vector2.down);
+                item.SetActive(true);
+            }
         }
 
-        private void OnGetHit()
+        public override string ToString()
         {
-
+            return $"{nameof(Name)}={Name}: {nameof(Attack)}={Attack}, {nameof(HoldingItem)}={HoldingItem}, {nameof(WeaponEquiped)}={WeaponEquiped}, {nameof(ArmorEquiped)}={ArmorEquiped}, {nameof(InteractionDistance)}={InteractionDistance.ToString()}, {nameof(Health)}={Health.ToString()}, {nameof(Id)}={Id.ToString()}, {nameof(Position)}={Position.ToString()}, {nameof(Active)}={Active.ToString()}, {nameof(Shape)}={Shape.ToString()}";
         }
 
-        private void OnDie()
+        public override bool Equals(object obj)
         {
+            return obj is Creature creature &&
+                   base.Equals(obj) &&
+                   Id == creature.Id &&
+                   Name == creature.Name &&
+                   Position.Equals(creature.Position) &&
+                   Active == creature.Active &&
+                   Shape == creature.Shape &&
+                   EqualityComparer<AgentAttack>.Default.Equals(Attack, creature.Attack) &&
+                   EqualityComparer<Item>.Default.Equals(HoldingItem, creature.HoldingItem) &&
+                   EqualityComparer<Item_Attack>.Default.Equals(WeaponEquiped, creature.WeaponEquiped) &&
+                   EqualityComparer<List<Item_Defence>>.Default.Equals(ArmorEquiped, creature.ArmorEquiped) &&
+                   InteractionDistance == creature.InteractionDistance &&
+                   Health == creature.Health &&
+                   _maxHealth == creature._maxHealth &&
+                   dead == creature.dead;
+        }
 
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(base.GetHashCode());
+            hash.Add(Id);
+            hash.Add(Name);
+            hash.Add(Position);
+            hash.Add(Active);
+            hash.Add(Shape);
+            hash.Add(Attack);
+            hash.Add(HoldingItem);
+            hash.Add(WeaponEquiped);
+            hash.Add(ArmorEquiped);
+            hash.Add(InteractionDistance);
+            hash.Add(Health);
+            hash.Add(_maxHealth);
+            hash.Add(dead);
+            return hash.ToHashCode();
         }
     }
 }
